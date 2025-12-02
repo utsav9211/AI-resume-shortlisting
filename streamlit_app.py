@@ -5,8 +5,8 @@ import streamlit as st
 import requests
 from pathlib import Path
 
-# Streamlit secrets may not exist in local dev; handle gracefully and default to localhost
-DEFAULT_API_URL = 'http://localhost:5000'
+# Streamlit secrets may not exist in local dev; handle gracefully and default to IPv4 localhost
+DEFAULT_API_URL = 'http://127.0.0.1:5000'
 try:
     # Access st.secrets in a guarded way, with safe fallback
     API_URL = DEFAULT_API_URL if not hasattr(st, 'secrets') else st.secrets.get('API_URL', DEFAULT_API_URL)
@@ -55,7 +55,10 @@ if st.button('Score Resume'):
                 st.write('Missing skills: ', result.get('missing_skills', []))
                 st.write('Detected resume skills: ', result.get('resume_skills', []))
             else:
-                st.error(f"API error: {resp.status_code} - {resp.text}")
+                if resp.status_code == 403:
+                    st.error(f"API error: 403 Forbidden. The client may be hitting another local service on 'localhost'. Try using 127.0.0.1 in Streamlit secrets or run the API on another port.")
+                else:
+                    st.error(f"API error: {resp.status_code} - {resp.text}")
         except Exception as e:
             st.error(f"Failed to connect to API: {e}")
 

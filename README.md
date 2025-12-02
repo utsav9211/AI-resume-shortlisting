@@ -42,7 +42,7 @@ Notes:
 - The Streamlit UI calls the API at `http://localhost:5000` by default. Set `st.secrets['API_URL']` to a different URL if needed.
  - The Streamlit UI calls the API at `http://localhost:5000` by default. Set `st.secrets['API_URL']` to a different URL if needed.
  
-Note on IPv6/IPv4 bindings: `localhost` may resolve to `::1` (IPv6) or `127.0.0.1` (IPv4). On macOS, other services (e.g., AirPlay/AirTunes) may be bound to port 5000 on IPv6 and return 403. If `curl` returns a 403 or you see that your requests are not reaching Flask, use 127.0.0.1 explicitly or force IPv4:
+Note on IPv6/IPv4 bindings: `localhost` may resolve to `::1` (IPv6) or `127.0.0.1` (IPv4). On macOS, other services (e.g., AirPlay/AirTunes) may bind to port 5000 on IPv6 and return 403. If `curl` returns a 403 or you see that your requests are not reaching Flask, use `127.0.0.1` explicitly or force IPv4:
 
 ```bash
 curl -4 -v -F "file=@data/resumes_sample/sample1.txt" http://127.0.0.1:5000/predict
@@ -62,11 +62,12 @@ lsof -iTCP -sTCP:LISTEN -n -P | grep 5000
 # sudo lsof -i :5000
 ```
 
-If you see another process (e.g., AirPlay/AirTunes) listening on port 5000, either stop that service or use a different port for your app (e.g., 5001) by setting `PORT` environment variable before running the app:
+If you see another process (e.g., AirPlay/AirTunes) listening on port 5000, either stop that service or use a different port for your app (e.g., 5001) by setting `PORT` or binding explicitly to `127.0.0.1` before running the app:
 
 ```bash
+# Bind to IPv4 127.0.0.1 and a different port (optional)
 export PORT=5001
-python app.py
+python -c "from app import app; app.run(host='127.0.0.1', port=int('$PORT'), debug=True)"
 ```
 
 Streamlit secrets (optional):
