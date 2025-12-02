@@ -1,0 +1,12 @@
+Flask>=2.0
+streamlit>=1.26
+scikit-learn>=1.0
+joblib>=1.2
+pdfminer.six>=20220524
+python-docx>=0.8.11
+nltk>=3.8.1
+spacy>=3.5.0
+pandas>=1.5
+python-dotenv>=1.0
+pytest>=7.0
+sentence-transformers>=2.2.2  # optional - uncomment if using SBERT

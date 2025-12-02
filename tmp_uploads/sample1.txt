@@ -1,0 +1,3 @@
+John Doe
+
+Experienced backend engineer with expertise in Python, Flask, and SQL. Built REST APIs and deployed using Docker. Familiar with AWS and Kubernetes.

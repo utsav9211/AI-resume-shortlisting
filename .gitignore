@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.env
+.env.*
+
+# Virtual environment
+venv/
+.env/
+
+# Jupyter
+.ipynb_checkpoints
+
+# model artifacts
+models/
+
+# Data
+data/
+
+# Misc
+.DS_Store
+*.log
+instance/
+
+# Streamlit
+.streamlit/
+
+# Coverage
+htmlcov/
+
+# macOS
+.DS_Store
+
